@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
+import ApiKey from './config'
 
 const Photos = (props) => {
+    console.log(props.images.photo)
+    
+    
     return(
         <div className="photo-container">
-            <h2>Results</h2>
+            <h2>Results For {props.title}</h2>
             <ul>
               <li>
                 <img src="https://farm5.staticflickr.com/4334/37032996241_4c16a9b530.jpg" alt="" />

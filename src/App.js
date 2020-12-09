@@ -1,38 +1,49 @@
 import React, { Component } from 'react';
+import {
+  BrowserRouter,
+  Route
+} from 'react-router-dom'
 import './App.css';
-import Photos from './components/Photos'
 import Nav from './components/Nav'
-import Search from './components/search'
-import SearchError from './components/SearchError'
-import apiKey from './config'
+import Photos from './components/Photos';
+import Search from './components/search';
+import axios from 'axios'
+import APIKey from './components/config'
+
 
 export default class App extends Component {
-  constructor(){
+  constructor() {
     super();
-    this.state = { 
-      apiResponse: []
-     }
+    this.state = {
+      ApiKey: APIKey,
+      search: 'dog',
+      images: []
+    }
+  }
 
+  componentDidMount(){
+    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${this.state.ApiKey}&tags=${this.state.search}&per_page=24&format=json&nojsoncallback=1`)
+    .then(res => {
+      res = res.data.photos
+      this.setState({
+        images: res
+      })
+    })
   }
   
-  //call search pass up props containing the search word
-  catSearch = (query = 'dogs') => {
-    const cats = `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`;
-    fetch(cats)
-      .then(res => res.json())
-      .then(resData => {
-        this.setState({
-          apiResponse: resData.photos.photo,
-        })
-      })
-  }
   render(){
-    console.log(this.state.apiResponse)
     return(
-      <div className="App">
-        <Search />
-        <Nav apiRes={this.state.apiResponse}/>
-      </div>
+      <BrowserRouter>
+        <div className='container'>
+          <Search />
+          <Nav />
+          <Route path="/Cats" render={ () => <Photos images={this.state.images} title="Cats"/>} />
+          <Route path="/Dogs" render={ () => <Photos images={this.state.images} title="Dogs"/>} />
+          <Route path="/Computers" render={ () => <Photos images={this.state.images} title="Computers"/>}/>
+        </div>
+      </BrowserRouter>
     )
   }
 }
+
+
