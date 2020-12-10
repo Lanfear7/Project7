@@ -1,29 +1,18 @@
 import React, { useState } from 'react';
-import ApiKey from './config'
+import Photo from './Photo';
 
 const Photos = (props) => {
-    console.log(props.images.photo)
-    
-    
-    return(
-        <div className="photo-container">
-            <h2>Results For {props.title}</h2>
-            <ul>
-              <li>
-                <img src="https://farm5.staticflickr.com/4334/37032996241_4c16a9b530.jpg" alt="" />
-              </li>
-              <li>
-                <img src="https://farm5.staticflickr.com/4342/36338751244_316b6ee54b.jpg" alt="" />
-              </li>
-              <li>
-                <img src="https://farm5.staticflickr.com/4343/37175099045_0d3a249629.jpg" alt="" />
-              </li>
-              <li>
-                <img src="https://farm5.staticflickr.com/4425/36337012384_ba3365621e.jpg" alt="" />
-              </li>
-            </ul>
-        </div>
-    ) 
+  //use map to map each photo in the array and add a custom key to each photo
+  var data = props.images
+  var photos = data.map(photo => <Photo image={photos}/>)
+  return(
+      <div className="photo-container">
+          <h2>Results For {props.title}</h2>
+          <ul>
+            { photos }
+          </ul>
+      </div>
+  ) 
 }
 
 export default  Photos
