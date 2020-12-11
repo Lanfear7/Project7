@@ -19,13 +19,17 @@ export default class App extends Component {
     super();
     this.state = {
       ApiKey: APIKey,
-      search: 'cats',
+      search: 'dogs',
       images: []
     }
   }
 
   componentDidMount(){
-    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${this.state.ApiKey}&tags=${this.state.search}&per_page=24&format=json&nojsoncallback=1`)
+
+  }
+
+  searchImages = (query) => {
+    axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${this.state.ApiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
     .then(res => {
       res = res.data.photos.photo
       this.setState({
@@ -38,11 +42,11 @@ export default class App extends Component {
     return(
       <div className='container'>
         <BrowserRouter>
-          <Search />
-          <Nav />
+          <Search onSearch={this.searchImages}/>
+          <Nav onClick={this.searchImages} />
           <Route path="/" render={ () => <Redirect to="/Cats"/>} />
           <Switch>  
-            <Route path="/Cats" render={ () => <Photos images={this.state.images} title="Cats"/>} />
+            <Route path="/Cats" render={ () => <Photos images={this.state.images} title="Cats"/> } />
             <Route path="/Dogs" render={ () => <Photos images={this.state.images} title="Dogs"/>} />
             <Route path="/Computers" render={ () => <Photos images={this.state.images} title="Computers"/>}/>
           </Switch>
