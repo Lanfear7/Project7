@@ -4,7 +4,6 @@ import Photo from './Photo';
 const Photos = (props) => {
   //use map to map each photo in the array and add a custom key to each photo
   var data = props.images
-  console.log(data)
   var photos = data.map((photo, index) => <Photo image={photo} index={index} key={index}/>)
   return(
       <div className="photo-container">
