@@ -105,6 +105,7 @@ export default class App extends Component {
             <Route path="/Cats" render={ () => <Photos images={this.state.imagesCats} title="Cats"/> } />
             <Route path="/Dogs" render={ () => <Photos images={this.state.imagesDogs} title="Dogs"/>} />
             <Route path="/Computers" render={ () => <Photos images={this.state.imagesComputers} title="Computers"/>}/>
+            <Route path="/Search/:query" render={ () => <Photos images={this.state.images} title="Computers"/>}/>
             <Route render={() => <Photos images={this.state.images}/>}/>
           </Switch>}
         </BrowserRouter>
