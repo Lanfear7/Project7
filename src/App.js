@@ -25,7 +25,8 @@ export default class App extends Component {
       imagesCats: [],
       imagesDogs: [],
       imagesComputers: [],
-      images: []
+      images: [],
+      loading: true
     }
   }
 
@@ -39,7 +40,8 @@ export default class App extends Component {
     .then(res => {
       res = res.data.photos.photo
       this.setState({
-        imagesCats: res
+        imagesCats: res,
+        loading: false
       })
     }).catch(err => {
       this.setState({
@@ -53,7 +55,8 @@ export default class App extends Component {
     .then(res => {
       res = res.data.photos.photo
       this.setState({
-        imagesDogs: res
+        imagesDogs: res,
+        loading: false
       })
     }).catch(err => {
       this.setState({
@@ -67,7 +70,8 @@ export default class App extends Component {
     .then(res => {
       res = res.data.photos.photo
       this.setState({
-        imagesComputers: res
+        imagesComputers: res,
+        loading: false
       })
     }).catch(err => {
       this.setState({
@@ -81,7 +85,8 @@ export default class App extends Component {
     .then(res => {
       res = res.data.photos.photo
       this.setState({
-        images: res
+        images: res,
+        loading: false
       })
     })
   }
@@ -91,14 +96,17 @@ export default class App extends Component {
       <div className='container'>
         <BrowserRouter>
           <Search onSearch={this.searchImages}/>
-          <Nav  />
-          <Route exact path="/" render={ () => <Redirect to="/Cats"/>} />
-          <Switch>  
+          <Nav />
+          { (this.state.loading)
+          ? <p>Loading...</p>
+          :
+          <Switch>
+            <Route exact path="/" render={ () => <Redirect to="/Cats"/>} />  
             <Route path="/Cats" render={ () => <Photos images={this.state.imagesCats} title="Cats"/> } />
             <Route path="/Dogs" render={ () => <Photos images={this.state.imagesDogs} title="Dogs"/>} />
             <Route path="/Computers" render={ () => <Photos images={this.state.imagesComputers} title="Computers"/>}/>
-            <Route render={() => <SearchError />}/>
-          </Switch>
+            <Route render={() => <Photos images={this.state.images}/>}/>
+          </Switch>}
         </BrowserRouter>
       </div>
     )

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 
+
 class Search extends Component{
 
   state = {
@@ -20,6 +21,7 @@ class Search extends Component{
   }
 
   render(){
+    console.log(this.props)
     return(
     <form className="search-form" onSubmit={this.handleSubmit}>
         <input type="search"
