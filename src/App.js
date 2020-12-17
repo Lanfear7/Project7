@@ -47,7 +47,6 @@ export default class App extends Component {
       this.setState({
         error: err
       })
-      console.log('error')
     })
   }
 
@@ -64,7 +63,6 @@ export default class App extends Component {
       this.setState({
         error: err
       })
-      console.log('error')
     })
   }
 
@@ -81,13 +79,11 @@ export default class App extends Component {
       this.setState({
         error: err
       })
-      console.log('error')
     })
   }
 
 
   searchImages = (query = 'vacations') => {
-      console.log(query)
       axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${this.state.ApiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
       .then(res => {
         res = res.data.photos.photo
