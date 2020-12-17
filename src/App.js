@@ -27,7 +27,8 @@ export default class App extends Component {
       imagesDogs: [],
       imagesComputers: [],
       images: [],
-      loading: true
+      loading: true,
+      searchText: ''
     }
   }
 
@@ -85,18 +86,8 @@ export default class App extends Component {
   }
 
 
-  searchImages = (query) => {
-    console.log(query)
-    if(query.includes('Search/')){
-      axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${this.state.ApiKey}&tags=${query.slice(7,20)}&per_page=24&format=json&nojsoncallback=1`)
-      .then(res => {
-        res = res.data.photos.photo
-        this.setState({
-          images: res,
-          loading: false
-        })
-      })
-    }else{
+  searchImages = (query = 'vacations') => {
+      console.log(query)
       axios.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${this.state.ApiKey}&tags=${query}&per_page=24&format=json&nojsoncallback=1`)
       .then(res => {
         res = res.data.photos.photo
@@ -105,23 +96,23 @@ export default class App extends Component {
           loading: false
         })
       })
-    }
   }
   
 
   componentDidMount(){
-    this.searchImages(window.location.pathname.slice(1))
     this.searchCats()
     this.searchDogs()
     this.searchComputers()
-    
+    if(window.location.pathname.includes('Search/')){
+      this.searchImages(window.location.pathname.slice(8,20))
+    }
   }
 
   render(){
     return(
       <div className='container'>
         <BrowserRouter>
-          <Search onSearch={this.searchImages} />
+          <Search onSearch={this.searchImages}/>
           <Nav />
           { (this.state.loading) //provide a loading message 
           ? <p>Loading...</p>
