@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { matchPath } from 'react-router-dom';
 import Photo from './Photo';
 import SearchError from './SearchError'
 

@@ -1,27 +1,30 @@
 import React, { Component } from 'react'
+import { withRouter } from "react-router";
 
 
 class Search extends Component{
-
   state = {
     searchText: ''
   }
-
+   
 
   //this will update the value of the searchText as the user types
   onSearchChange = e => {
-    this.setState({searchText: e.target.value})
+    
+    this.setState({searchText: this.search.value})
   }
 
 
   //when the form is submitted it will call this function
   handleSubmit = e => {
     e.preventDefault()
-    this.props.onSearch(this.state.searchText)
+    this.props.onSearch(this.state.searchText) 
+    console.log(this.search.value)  
+    const url = `/Search/${this.search.value}`
+    this.props.history.push(url)
   }
 
   render(){
-    console.log(this.props)
     return(
     <form className="search-form" onSubmit={this.handleSubmit}>
         <input type="search"
@@ -29,6 +32,7 @@ class Search extends Component{
         placeholder="Search" 
         required
         onChange={this.onSearchChange}
+        ref={ (input) => this.search = input}
          />
         <button type="submit" className="search-button">
           <svg fill="#fff" height="24" viewBox="0 0 23 23" width="24" xmlns="http://www.w3.org/2000/svg">
@@ -37,8 +41,8 @@ class Search extends Component{
           </svg>
         </button>
       </form>
-  )
+    )
   }
 }
 
-export default Search
+export default withRouter(Search)
